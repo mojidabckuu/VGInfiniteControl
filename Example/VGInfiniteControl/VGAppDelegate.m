@@ -8,11 +8,14 @@
 
 #import "VGAppDelegate.h"
 
+#import "VGViewController.h"
+
 @implementation VGAppDelegate
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = [[VGViewController alloc] initWithNibName:@"VGViewController" bundle:nil];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

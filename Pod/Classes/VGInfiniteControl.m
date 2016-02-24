@@ -48,7 +48,6 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 - (void)setup {
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _activityIndicatorView.hidesWhenStopped = YES;
-//    _activityIndicatorView.backgroundColor = [UIColor redColor];
     [self addSubview:_activityIndicatorView];
 }
 
@@ -66,8 +65,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    NSLog(@"Layout subview");
-    
+    self.bounds = CGRectMake(0, 0, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
     self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
@@ -197,15 +195,12 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
         CGFloat scrollOffsetThreshold = scrollViewContentHeight-self.scrollView.bounds.size.height;
         
         if(!self.scrollView.isDragging && self.infiniteState == VGInfiniteControlStateTriggered) {
-            NSLog(@"Loading");
             self.infiniteState = VGInfiniteControlStateLoading;
         }
         else if(contentOffset.y > scrollOffsetThreshold && self.infiniteState == VGInfiniteControlStateStopped && self.scrollView.isDragging) {
-            NSLog(@"Triggered");
             self.infiniteState = VGInfiniteControlStateTriggered;
         }
         else if(contentOffset.y < scrollOffsetThreshold  && self.infiniteState != VGInfiniteControlStateStopped) {
-            NSLog(@"Stopped");
             self.infiniteState = VGInfiniteControlStateStopped;
         }
     }

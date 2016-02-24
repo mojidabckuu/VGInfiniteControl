@@ -21,8 +21,9 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		9F863C779684D34EC78A5106 /* Pods_VGInfiniteControl_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94555A2E6648E85141683544 /* Pods_VGInfiniteControl_Example.framework */; };
+		F553C4991C7D9C5E006A1BFA /* VGViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F553C4981C7D9C5E006A1BFA /* VGViewController.xib */; };
+		F553C49B1C7D9DA1006A1BFA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F553C49A1C7D9DA1006A1BFA /* LaunchScreen.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,10 +62,11 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		73855ED3C29CAE9FA9FC1CC2 /* Pods_VGInfiniteControl_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VGInfiniteControl_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D38A4E284D2066579FC9D52 /* VGInfiniteControl.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = VGInfiniteControl.podspec; path = ../VGInfiniteControl.podspec; sourceTree = "<group>"; };
-		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		94555A2E6648E85141683544 /* Pods_VGInfiniteControl_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VGInfiniteControl_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96C9797B68FA1C7038E7D839 /* Pods-VGInfiniteControl_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VGInfiniteControl_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VGInfiniteControl_Tests/Pods-VGInfiniteControl_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9876C92F3F54657078635C02 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F553C4981C7D9C5E006A1BFA /* VGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VGViewController.xib; sourceTree = "<group>"; };
+		F553C49A1C7D9DA1006A1BFA /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,13 +132,14 @@
 		6003F593195388D20070C39A /* Example for VGInfiniteControl */ = {
 			isa = PBXGroup;
 			children = (
+				F553C49A1C7D9DA1006A1BFA /* LaunchScreen.xib */,
 				6003F59C195388D20070C39A /* VGAppDelegate.h */,
 				6003F59D195388D20070C39A /* VGAppDelegate.m */,
-				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
 				6003F5A5195388D20070C39A /* VGViewController.h */,
 				6003F5A6195388D20070C39A /* VGViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
+				F553C4981C7D9C5E006A1BFA /* VGViewController.xib */,
 			);
 			name = "Example for VGInfiniteControl";
 			path = VGInfiniteControl;
@@ -276,7 +279,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				F553C49B1C7D9DA1006A1BFA /* LaunchScreen.xib in Resources */,
+				F553C4991C7D9C5E006A1BFA /* VGViewController.xib in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -516,9 +520,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VGInfiniteControl/VGInfiniteControl-Prefix.pch";
 				INFOPLIST_FILE = "VGInfiniteControl/VGInfiniteControl-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -532,9 +538,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "VGInfiniteControl/VGInfiniteControl-Prefix.pch";
 				INFOPLIST_FILE = "VGInfiniteControl/VGInfiniteControl-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
