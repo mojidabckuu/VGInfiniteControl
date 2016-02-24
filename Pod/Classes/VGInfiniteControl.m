@@ -108,6 +108,10 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 #pragma mark - Modifiers
 
+- (void)setTintColor:(UIColor *)tintColor {
+    self.activityIndicatorView.color = tintColor;
+}
+
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     if(enabled) {
