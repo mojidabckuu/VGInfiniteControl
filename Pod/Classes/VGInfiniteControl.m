@@ -63,6 +63,13 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
     }
 }
 
+- (void)didMoveToWindow {
+    [super didMoveToWindow];
+    if(self.window == nil) {
+        [self removeScrollViewObserve];
+    }
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.bounds = CGRectMake(0, 0, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
