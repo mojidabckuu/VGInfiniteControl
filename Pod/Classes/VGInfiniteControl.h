@@ -3,7 +3,7 @@
 //  SVPullToRefreshDemo
 //
 //  Created by Vlad Gorbenko on 2/24/16.
-//  Copyright © 2016 Home. All rights reserved.
+//  Copyright © 2016 Vlad Gorbenko. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
