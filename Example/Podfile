@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'VGInfiniteControl_Example', :exclusive => true do
+  pod 'VGInfiniteControl', :path => '../'
+end
+
+target 'VGInfiniteControl_Tests', :exclusive => true do
+  pod 'VGInfiniteControl', :path => '../'
+
+  
+end
