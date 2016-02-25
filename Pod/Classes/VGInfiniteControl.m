@@ -67,6 +67,10 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
     [super didMoveToWindow];
     if(self.window == nil) {
         [self removeScrollViewObserve];
+    } else {
+        if(self.enabled) {
+            [self observeScrollView];
+        }
     }
 }
 
