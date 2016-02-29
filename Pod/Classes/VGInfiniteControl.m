@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.bounds = CGRectMake(0, 0, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
+    self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
     self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
@@ -101,13 +101,21 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 }
 
 - (void)setScrollViewContentInset:(UIEdgeInsets)contentInset {
-    [UIView animateWithDuration:0.3
-                          delay:0
-                        options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         self.scrollView.contentInset = contentInset;
-                     }
-                     completion:NULL];
+    [self setScrollViewContentInset:contentInset animated:NO];
+}
+
+- (void)setScrollViewContentInset:(UIEdgeInsets)contentInset animated:(BOOL)animated {
+    if(animated) {
+        [UIView animateWithDuration:0.3
+                              delay:0
+                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+                             self.scrollView.contentInset = contentInset;
+                         }
+                         completion:NULL];
+    } else {
+        self.scrollView.contentInset = contentInset;
+    }
 }
 
 #pragma mark -
