@@ -3,7 +3,7 @@
 //  SVPullToRefreshDemo
 //
 //  Created by Vlad Gorbenko on 2/24/16.
-//  Copyright © 2016 Vlad Gorbenko. All rights reserved.
+//  Copyright © 2016 Home. All rights reserved.
 //
 
 #import "VGInfiniteControl.h"
@@ -64,19 +64,14 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 }
 
 - (void)didMoveToWindow {
-    [super didMoveToWindow];
-    if(self.window == nil) {
+    if(!self.window) {
         [self removeScrollViewObserve];
-    } else {
-        if(self.enabled) {
-            [self observeScrollView];
-        }
     }
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
+    self.bounds = CGRectMake(0, 0, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
     self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
@@ -101,21 +96,13 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 }
 
 - (void)setScrollViewContentInset:(UIEdgeInsets)contentInset {
-    [self setScrollViewContentInset:contentInset animated:NO];
-}
-
-- (void)setScrollViewContentInset:(UIEdgeInsets)contentInset animated:(BOOL)animated {
-    if(animated) {
-        [UIView animateWithDuration:0.3
-                              delay:0
-                            options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             self.scrollView.contentInset = contentInset;
-                         }
-                         completion:NULL];
-    } else {
-        self.scrollView.contentInset = contentInset;
-    }
+    [UIView animateWithDuration:0.3
+                          delay:0
+                        options:UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         self.scrollView.contentInset = contentInset;
+                     }
+                     completion:NULL];
 }
 
 #pragma mark -
@@ -127,10 +114,6 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 #pragma mark - Modifiers
 
-- (void)setTintColor:(UIColor *)tintColor {
-    self.activityIndicatorView.color = tintColor;
-}
-
 - (void)setEnabled:(BOOL)enabled {
     [super setEnabled:enabled];
     if(enabled) {
@@ -138,6 +121,11 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
     } else {
         [self removeScrollViewObserve];
     }
+}
+
+- (void)setTintColor:(UIColor *)tintColor {
+    [super setTintColor:tintColor];
+    self.activityIndicatorView.color = tintColor;
 }
 
 - (void)setInfiniteState:(VGInfiniteControlState)infiniteState {
