@@ -36,7 +36,10 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 #pragma mark - Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+    CGRect adjustedFrame = frame;
+    adjustedFrame.size.height = VGInfiniteControlHeight;
+    adjustedFrame.size.width = [[UIScreen mainScreen] bounds].size.width * 1.5;
+    self = [super initWithFrame:adjustedFrame];
     if(self) {
         [self setup];
     }
@@ -48,6 +51,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 - (void)setup {
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _activityIndicatorView.hidesWhenStopped = YES;
+    _activityIndicatorView.center = self.center;
     [self addSubview:_activityIndicatorView];
 }
 
@@ -71,8 +75,9 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.bounds = CGRectMake(0, 0, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
-    self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    if(self.scrollView) {
+        self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    }
 }
 
 #pragma mark - Accessors
@@ -174,7 +179,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
         [self scrollViewDidScroll:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
     else if([keyPath isEqualToString:@"contentSize"]) {
         [self layoutSubviews];
-        self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.bounds.size.width, VGInfiniteControlHeight);
+        self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
     }
 }
 
@@ -184,8 +189,8 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
         [self.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
         [self setScrollViewContentInsetForInfiniteScrolling];
         self.isObserving = YES;
-        [self setNeedsLayout];
         self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
+        [self setNeedsLayout];
     }
 }
 
