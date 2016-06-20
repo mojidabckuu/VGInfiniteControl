@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 - (instancetype)initWithFrame:(CGRect)frame {
     CGRect adjustedFrame = frame;
     adjustedFrame.size.height = VGInfiniteControlHeight;
+    // TODO: Whaaaat is 1.5???
     adjustedFrame.size.width = [[UIScreen mainScreen] bounds].size.width * 1.5;
     self = [super initWithFrame:adjustedFrame];
     if(self) {
@@ -175,11 +176,11 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 #pragma mark - KV Observing
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if([keyPath isEqualToString:@"contentOffset"])
+    if([keyPath isEqualToString:@"contentOffset"]) {
         [self scrollViewDidScroll:[[change valueForKey:NSKeyValueChangeNewKey] CGPointValue]];
-    else if([keyPath isEqualToString:@"contentSize"]) {
+    } else if([keyPath isEqualToString:@"contentSize"]) {
         [self layoutSubviews];
-        self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
+        self.frame = CGRectMake(0, [self contentSize].height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
     }
 }
 
@@ -189,7 +190,7 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
         [self.scrollView addObserver:self forKeyPath:@"contentSize" options:NSKeyValueObservingOptionNew context:nil];
         [self setScrollViewContentInsetForInfiniteScrolling];
         self.isObserving = YES;
-        self.frame = CGRectMake(0, self.scrollView.contentSize.height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
+        self.frame = CGRectMake(0, [self contentSize].height, self.scrollView.bounds.size.width, VGInfiniteControlHeight);
         [self setNeedsLayout];
     }
 }
@@ -207,19 +208,30 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
 
 - (void)scrollViewDidScroll:(CGPoint)contentOffset {
     if(self.infiniteState != VGInfiniteControlStateLoading && self.enabled) {
-        CGFloat scrollViewContentHeight = self.scrollView.contentSize.height;
+        CGFloat scrollViewContentHeight = [self contentSize].height;
         CGFloat scrollOffsetThreshold = scrollViewContentHeight-self.scrollView.bounds.size.height;
         
         if(!self.scrollView.isDragging && self.infiniteState == VGInfiniteControlStateTriggered) {
             self.infiniteState = VGInfiniteControlStateLoading;
-        }
-        else if(contentOffset.y > scrollOffsetThreshold && self.infiniteState == VGInfiniteControlStateStopped && self.scrollView.isDragging) {
+        } else if(contentOffset.y > scrollOffsetThreshold && self.infiniteState == VGInfiniteControlStateStopped && self.scrollView.isDragging) {
             self.infiniteState = VGInfiniteControlStateTriggered;
-        }
-        else if(contentOffset.y < scrollOffsetThreshold  && self.infiniteState != VGInfiniteControlStateStopped) {
+        } else if(contentOffset.y < scrollOffsetThreshold  && self.infiniteState != VGInfiniteControlStateStopped) {
             self.infiniteState = VGInfiniteControlStateStopped;
         }
     }
+}
+
+// Table retrurns wrong contentSize in case when you have tableHeaderView or tableFooterView
+- (CGSize)contentSize {
+    if([self.scrollView isKindOfClass:UITableView.class]) {
+        UITableView *tableView = (UITableView *)self.scrollView;
+        NSInteger rowsCount = [tableView.dataSource tableView:tableView numberOfRowsInSection:0];
+        if(!rowsCount) {
+            CGSize size = CGSizeMake(tableView.contentSize.width, tableView.tableHeaderView.bounds.size.height + tableView.tableFooterView.bounds.size.height);
+            return size;
+        }
+    }
+    return self.scrollView.contentSize;
 }
 
 @end
