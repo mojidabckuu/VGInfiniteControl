@@ -226,6 +226,10 @@ typedef NS_ENUM(NSInteger, VGInfiniteControlState) {
     if([self.scrollView isKindOfClass:UITableView.class]) {
         UITableView *tableView = (UITableView *)self.scrollView;
         NSInteger rowsCount = [tableView.dataSource tableView:tableView numberOfRowsInSection:0];
+        if(tableView.tableFooterView && !rowsCount) {
+            CGSize size = CGSizeMake(tableView.contentSize.width, tableView.tableFooterView.frame.origin.y + tableView.tableFooterView.bounds.size.height);
+            return size;
+        }
         if(!rowsCount) {
             CGSize size = CGSizeMake(tableView.contentSize.width, tableView.tableHeaderView.bounds.size.height + tableView.tableFooterView.bounds.size.height);
             return size;
